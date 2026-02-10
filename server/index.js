@@ -22,7 +22,25 @@ const db = mysql.createPool({
 
 // TODO: Implement /submit-form to handle form data and insert into your database
 app.post('/submit-form', (req, res) => {
-  res.status(501).json({ message: 'Not implemented yet' });
+  const { firstname, lastname, email, subject} = req.body;
+  if (!firstname || !lastname || !email|| !subject) {
+    return res.status(400).json( {message: "All fields are required"});
+  }
+const sql = `
+  INSERT INTO contact_forms (First_name, Last_name, Email, message)
+  VALUES (?, ?, ?, ?)
+`;
+
+
+  db. execute(sql, [firstname, lastname, email, subject], (err, results) => {
+    if(err){
+      console.error("DB insert error:", err);
+      return res.status(500).json({message: "Database error."})
+    }
+    return res
+      .status(201)
+      .json({message: "form data inserted!", id: results.insertId});
+  });
 });
 
 // Optional: quick health check
