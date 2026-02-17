@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import NavBar from "../components/nav";
 import productImg from "../images/productImg.png";
 
@@ -9,74 +10,25 @@ const Shopping = () => {
   const [cartList, setCartList] = useState([]);
   const [page, setPage] = useState(PAGE_PRODUCTS);
 
-  const [products] = useState([
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-    {
-      image: productImg,
-      name: "Product Title",
-      description: "A description of the product",
-      price: "Price"
-    },
-  ]);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/api/products`
+        );
+        setProducts(data.rows);
+        setError(null);
+      } catch (err) {
+        setError("Failed to fetch products");
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const addToCart = (product) => {
     setCartList([...cartList, product]);
@@ -135,7 +87,7 @@ const Shopping = () => {
 
   return (
     <div className="main">
-      {renderProducts()}
+      {page === PAGE_PRODUCTS && renderProducts()}
       {page === PAGE_CART && renderCart()}
       <NavBar length={cartList.length} />
     </div>

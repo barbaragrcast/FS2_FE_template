@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
+const e = require('express');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -45,6 +46,31 @@ const sql = `
 
 // Optional: quick health check
 app.get('/health', (req, res) => res.json({ ok: true }));
+app.get('/products', async(req, res) =>{
+  const sql = 'SELECT id, name, description, image_url, price FROM products';
+})
+
+try {
+  const [response] = await db.query(sql)
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200).json({rows: response})
+} catch (e){
+  console.error("error fetching products", err);
+  return res.status(500).json({message: "Database error"})
+}
+
+
+app.get("/api/ecommerce/products", (req, res) => {
+  const sql = "SELECT id, name, description, image_url, price from products"
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error("OH NO");
+      res.status(500).json({message: "something awful happened"})
+    } else {
+      res.status(200).json({rows: result});
+    }
+  })
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
