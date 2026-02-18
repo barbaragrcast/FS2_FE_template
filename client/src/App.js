@@ -1,13 +1,7 @@
 import React from "react";
-import Featured from "./Featured"; // import your component
-import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <Featured />
-    </div>
-  );
+  return <div>🚀 My React App is working!</div>;
 }
 
 export default App;
