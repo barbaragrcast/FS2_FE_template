@@ -25,7 +25,6 @@ import { Footer } from "./components/index.js";
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
-
   return (
     <>
       <BrowserRouter>
