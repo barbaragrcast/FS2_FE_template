@@ -6,13 +6,23 @@ import productImg from "../images/productImg.png";
 const PAGE_PRODUCTS = "products";
 const PAGE_CART = "cart";
 
-const Shopping = () => {
+const [filteredProducts, setFilteredProducts] = useState([])
+
+
+useEffect(() => {
+  setFilteredProducts(
+    products.filter((products) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+}, [products, searchTerm]);
+
+const Shopping = (props) => {
+  const { searchTerm } = props;
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [cartList, setCartList] = useState([]);
   const [page, setPage] = useState(PAGE_PRODUCTS);
-
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -46,10 +56,10 @@ const Shopping = () => {
         </button>
       </header>
       <div id="shopping">
-        {products.map((product, idx) => (
+        {filteredProducts.map((product, idx) => (
           <div className="card" key={idx}>
             <div id="product">
-              <img src={product.image} alt="" />
+              <img id ="img" src={product.image} alt="" />
               <h2> {product.name} </h2>
               <h3> {product.description} </h3>
               <h3> {product.price} </h3>
@@ -60,7 +70,11 @@ const Shopping = () => {
       </div>
     </>
   );
-
+const renderProducts1 = () => {
+  return filteredProducts.map((product) => (
+    <Product key={product.id} product={product} addToCart={addToCart} />
+    ));
+};
   const renderCart = () => (
     <>
       <div id="cart-container">

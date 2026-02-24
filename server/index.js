@@ -44,14 +44,28 @@ app.get('/products', async (req, res) => {
   }
 });
 
-app.get("/api/ecommerce/products", async (req, res) => {
-  const sql = 'SELECT id, name, description, image_url, price FROM products';
-  try {
-    const [rows] = await db.query(sql);
-    res.status(200).json({ rows });
-  } catch (err) {
-    res.status(500).json({ message: "Database error" });
-  }
+app.get("/api/ecommerce/products", (req, res) => {
+  const searchTerm = req.query.search || '';
+  const sql = 'SELECT * FROM products WHERE name LIKE ?';
+  const values = [`%${searchTerm}%`];
+  db.query(sql, values, (err, result) => {
+    res.setHeader("Content-Type", "application/json");
+    res.json(result);
+  })
+});
+
+//shopping cart
+app.get("/api/ecommerce/cart", (req, res) => {
+  const sql = 'SELECT * FROM cart';
+  db.query(sql, (err, result) => {
+    if (err){
+      console.log(err);
+      res.status(500).send("Server error");
+      return;
+    }
+    res.setHeader("Content-Type", "application/json");
+    res.json(result);
+  })
 });
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

@@ -10,7 +10,6 @@ import "./styling/contact.css";
 import "./styling/hero.css";
 import "./styling/featured.css";
 
-
 import About from "./pages/about";
 import Account from "./pages/account";
 import Cart from "./pages/cart";
@@ -18,18 +17,21 @@ import Contact from "./pages/contact";
 import Shopping from "./pages/shopping";
 import Home from "./pages/home";
 
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import { useState } from 'react';
 import { NavBar } from "./components/index.js";
 import { Footer } from "./components/index.js";
+import {useState} from "react";
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+
   return (
     <>
       <BrowserRouter>
         <div className="main">
-          <NavBar />
+          <NavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           <Footer />
         </div>
         <Routes>
@@ -37,10 +39,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/about" element={<About />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/shopping" element={<Shopping />} />
+          <Route path="/shopping" element={<Shopping searchTerm={searchTerm} />} />
         </Routes>
       </BrowserRouter>
     </>
