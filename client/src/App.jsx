@@ -1,13 +1,12 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/home.jsx";
+import About from "./pages/about.jsx";
+import Account from "./pages/account.jsx";
+import Cart from "./pages/cart.jsx";
+import Contact from "./pages/contact.jsx";
+import Shopping from "./pages/shopping.jsx";
 
-import { NavBar, Footer } from "./components";
-import Home from "./pages/home";
-import About from "./pages/about";
-import Account from "./pages/account";
-import Cart from "./pages/cart";
-import Contact from "./pages/contact";
-import Shopping from "./pages/shopping";
+import { NavBar } from "./components/index.js"; // keep .js if index.js is not JSX
+import { Footer } from "./components/index.js";
 
 function App() {
   return (

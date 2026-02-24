@@ -1,3 +1,3 @@
-export { default as NavBar } from "./nav";
-export { default as Footer } from "./footer";
-export { default as Hero } from "./hero";
+export { default as NavBar } from "./NavBar.jsx";
+export { default as Footer } from "./Footer.jsx";
+export { default as Hero } from "./hero.jsx";
