@@ -21,7 +21,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from 'react';
 import { NavBar } from "./components/index.js";
 import { Footer } from "./components/index.js";
-import {useState} from "react";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
