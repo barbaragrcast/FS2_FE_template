@@ -10,19 +10,9 @@ import { Footer } from "./components/index.js";
 
 function App() {
   return (
-    <BrowserRouter>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/shopping" element={<Shopping />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <div style={{ padding: "20px", textAlign: "center" }}>
+      <h1>Hello, React is working!</h1>
+    </div>
   );
 }
 
