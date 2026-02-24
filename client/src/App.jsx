@@ -1,15 +1,50 @@
-import Home from "./pages/home.jsx";
-import About from "./pages/about.jsx";
-import Account from "./pages/account.jsx";
-import Cart from "./pages/cart.jsx";
-import Contact from "./pages/contact.jsx";
-import Shopping from "./pages/shopping.jsx";
+import React from "react";
+import "./styling/App.css";
+import "./styling/nav.css";
+import "./styling/footer.css";
+import "./styling/home.css";
+import "./styling/shopping.css";
+import "./styling/about.css";
+import "./styling/account.css";
+import "./styling/contact.css";
+import "./styling/hero.css";
+import "./styling/featured.css";
 
-import { NavBar } from "./components/index.js"; // keep .js if index.js is not JSX
+
+import About from "./pages/about";
+import Account from "./pages/account";
+import Cart from "./pages/cart";
+import Contact from "./pages/contact";
+import Shopping from "./pages/shopping";
+import Home from "./pages/home";
+
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import { NavBar } from "./components/index.js";
 import { Footer } from "./components/index.js";
 
 function App() {
-  return <h1 style={{ color: "black" }}>Hello, React works!</h1>;
+  return (
+    <>
+      <BrowserRouter>
+        <div className="main">
+          <NavBar />
+          <Footer />
+        </div>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/shopping" element={<Shopping />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;
