@@ -9,11 +9,9 @@ import { NavBar } from "./components/index.js"; // keep .js if index.js is not J
 import { Footer } from "./components/index.js";
 
 function App() {
-  return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>Hello, React is working!</h1>
-    </div>
-  );
+  return <h1>Hello, React works!</h1>;
 }
+
+
 
 export default App;
