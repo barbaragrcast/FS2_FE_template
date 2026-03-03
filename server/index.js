@@ -1,3 +1,4 @@
+// index.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -7,11 +8,12 @@ const mysql = require('mysql2/promise');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/api", apiRouter);
 
+// MySQL pool
 const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -19,95 +21,113 @@ const db = mysql.createPool({
   database: process.env.DB_NAME,
 });
 
+// -----------------
+// API Router
+// -----------------
+const apiRouter = express.Router();
 
+// Helper function to get all cart items
+async function getCart(res) {
+  try {
+    const [rows] = await db.execute(
+      "SELECT id, name, description, price, image_url FROM cart"
+    );
+    res.status(200).json({ rows });
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+}
 
-app.post('/submit-form', (req, res) => {
+// -----------------
+// Routes
+// -----------------
+
+// Health check
+app.get('/health', (req, res) => res.json({ ok: true }));
+
+// Submit contact form
+app.post('/submit-form', async (req, res) => {
   const { firstname, lastname, email, subject } = req.body;
   if (!firstname || !lastname || !email || !subject) {
     return res.status(400).json({ message: "All fields are required" });
   }
+
   const sql = `
     INSERT INTO contact_forms (First_name, Last_name, Email, message)
     VALUES (?, ?, ?, ?)
   `;
-  db.execute(sql, [firstname, lastname, email, subject])
-    .then(([results]) => res.status(201).json({ message: "Form data inserted!", id: results.insertId }))
-    .catch((err) => res.status(500).json({ message: "Database error." }));
+  try {
+    const [result] = await db.execute(sql, [firstname, lastname, email, subject]);
+    res.status(201).json({ message: "Form data inserted!", id: result.insertId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Database error." });
+  }
 });
 
-app.get('/health', (req, res) => res.json({ ok: true }));
-
+// Get all products
 app.get('/products', async (req, res) => {
-  const sql = 'SELECT id, name, description, image_url, price FROM products';
   try {
-    const [rows] = await db.query(sql);
+    const [rows] = await db.query('SELECT id, name, description, image_url, price FROM products');
     res.status(200).json({ rows });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Database error" });
   }
 });
 
-apiRouter.post("/cart", (req,res) => {
-  const sql = "INSERT INTO cart(name, price, description, image_url) values (?, ?, ?, ?)"
-  const {name, price, description, image_url} = req.body;
-  db.execute(sql, [name, price, description, image_url], (err, result) => {
-    if (err) {
-      console.log("ERROR", err);
-      res.status(500).json({error: "OH NO!!"})
-    }
-    res.status(201).json({response: "Added to cart"});
-  });
-})
-
-function getCart(res){
-  const sql = "select id, name, description, price, image_url from cart";
-  db.execute(sql, (err, result) => {
-    if (err) {
-      console.error("OH NO", err);
-      res.status(500).json({error: "Something Horrible"});
-    } else {
-      console.log(result)
-      res.status(200).json({rpws: result});
-    }
-  })
-}
-
-app.get("/api/ecommerce/products", (req, res) => {
+// Search products (optional search term)
+apiRouter.get("/ecommerce/products", async (req, res) => {
   const searchTerm = req.query.search || '';
   const sql = 'SELECT * FROM products WHERE name LIKE ?';
-  const values = [`%${searchTerm}%`];
-  db.query(sql, values, (err, result) => {
-    res.setHeader("Content-Type", "application/json");
-    res.json(result);
-  })
+  try {
+    const [rows] = await db.query(sql, [`%${searchTerm}%`]);
+    res.status(200).json({ rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Database error" });
+  }
 });
 
-//shopping cart
-app.get("/api/ecommerce/cart", (req, res) => {
-  const sql = 'SELECT * FROM cart';
-  db.query(sql, (err, result) => {
-    if (err){
-      console.log(err);
-      res.status(500).send("Server error");
-      return;
-    }
-    res.setHeader("Content-Type", "application/json");
-    res.json(result);
-  })
+// -----------------
+// Cart Routes
+// -----------------
+
+// Get all cart items
+apiRouter.get("/cart", async (req, res) => {
+  await getCart(res);
 });
 
+// Add to cart
+apiRouter.post("/cart", async (req, res) => {
+  const { name, price, description, image_url } = req.body;
+  const sql = "INSERT INTO cart(name, price, description, image_url) VALUES (?, ?, ?, ?)";
+  try {
+    const [result] = await db.execute(sql, [name, price, description, image_url]);
+    res.status(201).json({ response: "Added to cart", id: result.insertId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to add to cart" });
+  }
+});
+
+// Delete cart item by ID
+apiRouter.delete("/cart/:id", async (req, res) => {
+  const sql = "DELETE FROM cart WHERE id = ?";
+  try {
+    await db.execute(sql, [req.params.id]);
+    await getCart(res); // Return updated cart
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete from cart" });
+  }
+});
+
+// Mount API router
 
 
-api.Router.get("/cart", (req, res) => {
-  getCart(res);
-})
-
-
-apiRouter.delete("/cart/:id", (req, res) => {
-  const sql = "delete from cart where id = (?)";
-  db.execute(sql, [req.params.id], (err, result) => {
-    getCart(res);
-  })
-})
-
+// -----------------
+// Start server
+// -----------------
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
