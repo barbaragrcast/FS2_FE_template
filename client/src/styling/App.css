@@ -1,20 +1,21 @@
-html, body {
+html {
   height: 100%;
-  margin: 0;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  top: 0px;
+  min-height: 100%;
   width: 100vw;
   background-color: #f4ede7;
 }
 
 .main {
-  flex: 1; /* pushes footer down */
+  overflow: auto;
+  position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* ensures content stretches to fill page */
-  padding-bottom: 50px; /* optional extra space */
+  justify-content: space-between;
+  top: 0px;
+  width: 100vw;
+  min-height: 140vh;
 }
