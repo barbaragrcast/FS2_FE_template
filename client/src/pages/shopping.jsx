@@ -1,4 +1,3 @@
-// Shopping.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Product from "../components/product";
@@ -7,17 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 const PAGE_PRODUCTS = "products";
 const PAGE_CART = "cart";
-
-const Shopping = ({ searchTerm, addToCart: parentAddToCart }) => {
+const Shopping = ({ searchTerm, addToCart, removeFromCart, cart }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [cartList, setCartList] = useState([]);
-  const [page, setPage] = useState(PAGE_PRODUCTS);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Fetch products from backend
+  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -35,7 +31,7 @@ const Shopping = ({ searchTerm, addToCart: parentAddToCart }) => {
     fetchProducts();
   }, []);
 
-  // Filter products based on search term
+  // Filter products
   useEffect(() => {
     const filtered = products.filter((product) =>
       product.name.toLowerCase().includes((searchTerm || "").toLowerCase())
@@ -43,34 +39,23 @@ const Shopping = ({ searchTerm, addToCart: parentAddToCart }) => {
     setFilteredProducts(filtered);
   }, [products, searchTerm]);
 
-  // Handle Add to Cart
+  // Handle add to cart
   const handleAddToCart = async (product) => {
     try {
-      // Add to local cart state
-      setCartList((prev) => [...prev, product]);
-
-      // Update parent cart in App.jsx
-      if (parentAddToCart) parentAddToCart(product);
-
-      // Send to backend cart table
+      addToCart(product); // App-level cart
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/cart`, product);
-
-      // Optionally navigate to cart page
       navigate("/cart");
     } catch (err) {
       console.error("Failed to add product to cart", err);
     }
   };
 
-  // Navigate between products and cart
-  const navigateTo = (nextPage) => setPage(nextPage);
-
-  // Render products page
+  // Render products
   const renderProducts = () => (
     <>
       <header id="shopping-head">
-        <button onClick={() => navigateTo(PAGE_CART)} id="goToCart">
-          Go to Cart ({cartList.length})
+        <button onClick={() => navigate("/cart")} id="goToCart">
+          Go to Cart ({cart.length})
         </button>
       </header>
 
@@ -85,43 +70,17 @@ const Shopping = ({ searchTerm, addToCart: parentAddToCart }) => {
           !error &&
           filteredProducts.map((product) => (
             <div className="card" key={product.id}>
-              <Product product={product} addToCart={handleAddToCart} />
+              <Product product={product} />
+              <button onClick={() => handleAddToCart(product)}>
+                Add to Cart
+              </button>
             </div>
           ))}
       </div>
     </>
   );
 
-  // Render cart page
-  const renderCart = () => (
-    <div id="cart-container">
-      <button onClick={() => navigateTo(PAGE_PRODUCTS)} id="products-btn">
-        Back to Products
-      </button>
-
-      <h1 id="cart-title">Cart</h1>
-
-      {cartList.map((product, idx) => (
-        <div className="card card-container" key={idx}>
-          <div id="product">
-            <img src={product.image_url || productImg} alt={product.name} />
-            <h2>{product.name}</h2>
-            <h3>{product.description}</h3>
-            <h3>${product.price}</h3>
-          </div>
-        </div>
-      ))}
-
-      <button id="checkout-btn">Checkout</button>
-    </div>
-  );
-
-  return (
-    <div className="main">
-      {page === PAGE_PRODUCTS && renderProducts()}
-      {page === PAGE_CART && renderCart()}
-    </div>
-  );
+  return <div className="main">{renderProducts()}</div>;
 };
 
 export default Shopping;

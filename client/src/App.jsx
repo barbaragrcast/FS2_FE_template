@@ -31,6 +31,10 @@ function App() {
     setCart((prevCart) => [...prevCart, product]);
   };
 
+  const removeFromCart = (index) => {
+    setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+  };
+
   return (
     <BrowserRouter>
       <div className="main">
@@ -47,11 +51,23 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/account" element={<Account />} />
-        <Route path="/cart" element={<Cart cart={cart} />} />
+        <Route
+          path="/cart"
+          element={
+            <Cart cart={cart} removeFromCart={removeFromCart} />
+          }
+        />
         <Route path="/contact" element={<Contact />} />
         <Route
           path="/shopping"
-          element={<Shopping searchTerm={searchTerm} addToCart={addToCart} />}
+          element={
+            <Shopping
+              searchTerm={searchTerm}
+              addToCart={addToCart}
+              removeFromCart={removeFromCart}
+              cart={cart}
+            />
+          }
         />
       </Routes>
     </BrowserRouter>
