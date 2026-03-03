@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+// Styles
 import "./styling/App.css";
 import "./styling/nav.css";
 import "./styling/footer.css";
@@ -37,26 +38,13 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="main">
-        <NavBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          cartCount={cart.length}
-        />
-        <Footer />
-      </div>
-
+      <NavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} cartCount={cart.length} />
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/account" element={<Account />} />
-        <Route
-          path="/cart"
-          element={
-            <Cart cart={cart} removeFromCart={removeFromCart} />
-          }
-        />
+        <Route path="/cart" element={<Cart cart={cart} removeFromCart={removeFromCart} />} />
         <Route path="/contact" element={<Contact />} />
         <Route
           path="/shopping"
@@ -64,12 +52,12 @@ function App() {
             <Shopping
               searchTerm={searchTerm}
               addToCart={addToCart}
-              removeFromCart={removeFromCart}
               cart={cart}
             />
           }
         />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

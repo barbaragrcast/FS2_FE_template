@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Product from "../components/product";
-import productImg from "../images/productImg.png";
 import { useNavigate } from "react-router-dom";
+import productImg from "../images/productImg.png";
 
-const PAGE_PRODUCTS = "products";
-const PAGE_CART = "cart";
-const Shopping = ({ searchTerm, addToCart, removeFromCart, cart }) => {
+const Shopping = ({ searchTerm, addToCart, cart }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [error, setError] = useState(null);
@@ -17,9 +15,7 @@ const Shopping = ({ searchTerm, addToCart, removeFromCart, cart }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/api/products`
-        );
+        const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`);
         setProducts(data.rows || []);
         setError(null);
       } catch (err) {
@@ -39,20 +35,18 @@ const Shopping = ({ searchTerm, addToCart, removeFromCart, cart }) => {
     setFilteredProducts(filtered);
   }, [products, searchTerm]);
 
-  // Handle add to cart
   const handleAddToCart = async (product) => {
     try {
-      addToCart(product); // App-level cart
+      addToCart(product); // update global cart
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/cart`, product);
-      navigate("/cart");
+      navigate("/cart"); // go to cart page
     } catch (err) {
       console.error("Failed to add product to cart", err);
     }
   };
 
-  // Render products
-  const renderProducts = () => (
-    <>
+  return (
+    <div className="main">
       <header id="shopping-head">
         <button onClick={() => navigate("/cart")} id="goToCart">
           Go to Cart ({cart.length})
@@ -63,24 +57,18 @@ const Shopping = ({ searchTerm, addToCart, removeFromCart, cart }) => {
 
       <div id="shopping">
         {isLoading && <p>Loading products...</p>}
-        {!isLoading && !error && filteredProducts.length === 0 && (
-          <h2>No products available at the moment.</h2>
-        )}
+        {!isLoading && !error && filteredProducts.length === 0 && <h2>No products available at the moment.</h2>}
         {!isLoading &&
           !error &&
           filteredProducts.map((product) => (
             <div className="card" key={product.id}>
               <Product product={product} />
-              <button onClick={() => handleAddToCart(product)}>
-                Add to Cart
-              </button>
+              <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
             </div>
           ))}
       </div>
-    </>
+    </div>
   );
-
-  return <div className="main">{renderProducts()}</div>;
 };
 
 export default Shopping;
