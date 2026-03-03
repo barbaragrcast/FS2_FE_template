@@ -23,7 +23,6 @@ import Home from "./pages/home";
 
 // Components
 import { NavBar, Footer } from "./components/index.js";
-
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [cart, setCart] = useState([]);
@@ -38,26 +37,26 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} cartCount={cart.length} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/cart" element={<Cart cart={cart} removeFromCart={removeFromCart} />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route
-          path="/shopping"
-          element={
-            <Shopping
-              searchTerm={searchTerm}
-              addToCart={addToCart}
-              cart={cart}
+      <div className="app-container"> {/* <-- wrap everything */}
+        <NavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} cartCount={cart.length} />
+        
+        <div className="main"> {/* <-- main content grows */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/cart" element={<Cart cart={cart} removeFromCart={removeFromCart} />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route
+              path="/shopping"
+              element={<Shopping searchTerm={searchTerm} addToCart={addToCart} cart={cart} />}
             />
-          }
-        />
-      </Routes>
-      <Footer />
+          </Routes>
+        </div>
+
+        <Footer /> {/* <-- footer stays at bottom */}
+      </div>
     </BrowserRouter>
   );
 }
