@@ -13,7 +13,7 @@
 #sct1 {
   width: 33%;
   background-color: rgb(176, 185, 128);
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Montserrat", sans-serif;
 }
 
 #sct1-txt {
@@ -24,14 +24,14 @@
 #sct2 {
   width: 33%;
   background-color: rgb(176, 185, 128);
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Montserrat", sans-serif;
   text-align: center;
 }
 
 #sct3 {
   width: 33%;
   background-color: rgb(176, 185, 128);
-  font-family: "Courier New", Courier, monospace;
+  font-family:"Montserrat", sans-serif;
 }
 
 #newsletter {
