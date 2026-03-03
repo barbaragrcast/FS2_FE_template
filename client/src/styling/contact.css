@@ -1,12 +1,8 @@
 #contact-page {
- #hero {
   background: url("https://i.pinimg.com/736x/52/30/64/523064266f1a7aeaaaf525108b1dc4f2.jpg") center/cover no-repeat;
-  height: 100vh; /* full viewport height */
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  height: 140vh; /* full viewport height */
+  width: 200vw;
+
 }
 
 #contact {
