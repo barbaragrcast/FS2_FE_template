@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Product from "../components/product";
+import productImg from "../images/productImg.png";
 import { useNavigate } from "react-router-dom";
-import productImg from "../images/productImg.png"; // fallback image
-import Product from "../components/product"; // make sure you have this
 
-const Shopping = ({ searchTerm, addToCart }) => {
+const PAGE_PRODUCTS = "products";
+const PAGE_CART = "cart";
+
+const Shopping = ({ searchTerm, addToCart: parentAddToCart }) => {
+  // STATES
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [cartList, setCartList] = useState([]);
+  const [page, setPage] = useState(PAGE_PRODUCTS);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  // FETCH PRODUCTS
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -20,16 +27,15 @@ const Shopping = ({ searchTerm, addToCart }) => {
         setProducts(data.rows || []);
         setError(null);
       } catch (err) {
-        console.error("Error fetching products:", err);
         setError("Failed to fetch products");
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchProducts();
   }, []);
 
+  // FILTER PRODUCTS
   useEffect(() => {
     const filtered = products.filter((product) =>
       product.name.toLowerCase().includes((searchTerm || "").toLowerCase())
@@ -37,28 +43,46 @@ const Shopping = ({ searchTerm, addToCart }) => {
     setFilteredProducts(filtered);
   }, [products, searchTerm]);
 
+  // ADD TO CART
   const handleAddToCart = async (product) => {
     try {
-      addToCart(product); // updates cart in App.jsx
-      // optional: send to backend cart table
+      // Add to local cart state
+      setCartList((prev) => [...prev, product]);
+
+      // Call App.jsx cart updater
+      if (parentAddToCart) parentAddToCart(product);
+
+      // Add to backend cart table
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/cart`, product);
-      navigate("/cart"); // go to cart page if you want
+
+      // Optional: navigate to cart page
+      navigate("/cart");
     } catch (err) {
-      console.error("Failed to add to cart:", err);
+      console.error("Failed to add product to cart", err);
     }
   };
 
-  return (
-    <div className="shopping-page">
-      {isLoading && <p>Loading products...</p>}
+  // NAVIGATION
+  const navigateTo = (nextPage) => setPage(nextPage);
+
+  // RENDER PRODUCTS
+  const renderProducts = () => (
+    <>
+      <header id="shopping-head">
+        <button onClick={() => navigateTo(PAGE_CART)} id="goToCart">
+          Go to Cart ({cartList.length})
+        </button>
+      </header>
+
       {error && <p>{error}</p>}
 
-      {!isLoading && !error && filteredProducts.length === 0 && (
-        <p>No products found</p>
-      )}
-
-      <div className="product-grid">
+      <div id="shopping">
+        {isLoading && <p>Loading products...</p>}
+        {!isLoading && !error && filteredProducts.length === 0 && (
+          <h2>No products available at the moment.</h2>
+        )}
         {!isLoading &&
+          !error &&
           filteredProducts.map((product) => (
             <div className="card" key={product.id}>
               <Product product={product} />
@@ -66,6 +90,37 @@ const Shopping = ({ searchTerm, addToCart }) => {
             </div>
           ))}
       </div>
+    </>
+  );
+
+  // RENDER CART
+  const renderCart = () => (
+    <div id="cart-container">
+      <button onClick={() => navigateTo(PAGE_PRODUCTS)} id="products-btn">
+        Back to Products
+      </button>
+
+      <h1 id="cart-title">Cart</h1>
+
+      {cartList.map((product, idx) => (
+        <div className="card card-container" key={idx}>
+          <div id="product">
+            <img src={product.image_url || productImg} alt={product.name} />
+            <h2>{product.name}</h2>
+            <h3>{product.description}</h3>
+            <h3>${product.price}</h3>
+          </div>
+        </div>
+      ))}
+
+      <button id="checkout-btn">Checkout</button>
+    </div>
+  );
+
+  return (
+    <div className="main">
+      {page === PAGE_PRODUCTS && renderProducts()}
+      {page === PAGE_CART && renderCart()}
     </div>
   );
 };
