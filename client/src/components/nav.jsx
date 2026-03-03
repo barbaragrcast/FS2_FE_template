@@ -35,12 +35,12 @@ const NavBar = (props) => {
           </Link>
 
           <img className="icons" src={acct} alt=""></img>
-
-          <button onClick={props.cartPath} id="cart-btn">
-            {" "}
-            {props.length}
-            <img src={cartlogo} alt=""></img>
-          </button>
+      
+          <Link to="/cart" id="cart-btn">
+            Cart (
+              {length ?? 0})
+              <img src={cartlogo} alt= ""></img>
+          </Link>
         </div>
         <div id="links">
           <Link className="navlink" to="/">Home</Link>

@@ -25,13 +25,21 @@ import { Footer } from "./components/index.js";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [cart, setCart] = useState([]);
 
+  const addToCart = (product) => {
+    setCart((prevCart) => [...prevCart, product]);
+  };
 
   return (
     <>
       <BrowserRouter>
         <div className="main">
-          <NavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <NavBar 
+            searchTerm={searchTerm} 
+            setSearchTerm={setSearchTerm} 
+            cartCount={cart.length} 
+          />
           <Footer />
         </div>
         <Routes>
@@ -39,13 +47,14 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={<Cart cart={cart} />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/shopping" element={<Shopping searchTerm={searchTerm} />} />
+          <Route 
+            path="/shopping" 
+            element={<Shopping searchTerm={searchTerm} addToCart={addToCart} />} 
+          />
         </Routes>
       </BrowserRouter>
     </>
   );
 }
-
-export default App;

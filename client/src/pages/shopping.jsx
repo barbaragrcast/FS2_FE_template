@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import productImg from "../images/productImg.png";
+import { useNavigate } from "react-router-dom";
 
 const PAGE_PRODUCTS = "products";
 const PAGE_CART = "cart";
@@ -12,8 +13,8 @@ const Shopping = ({ searchTerm }) => {
   const [cartList, setCartList] = useState([]);
   const [page, setPage] = useState(PAGE_PRODUCTS);
   const [error, setError] = useState(null);
+  const navigate =useNavigate();
 
-  // Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -30,7 +31,6 @@ const Shopping = ({ searchTerm }) => {
     fetchProducts();
   }, []);
 
-  // Filter products when searchTerm changes
   useEffect(() => {
     const filtered = products.filter((product) =>
       product.name
@@ -41,8 +41,10 @@ const Shopping = ({ searchTerm }) => {
     setFilteredProducts(filtered);
   }, [products, searchTerm]);
 
-  const addToCart = (product) => {
-    setCartList([...cartList, product]);
+  const addToCart = async (product) => {
+    const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/cart`, product);
+    console.log("Add to cart response:", response);
+    navigateTo("/cart");
   };
 
   const navigateTo = (nextPage) => {
@@ -60,23 +62,18 @@ const Shopping = ({ searchTerm }) => {
       {error && <p>{error}</p>}
 
       <div id="shopping">
-        {filteredProducts.map((product, idx) => (
-          <div className="card" key={idx}>
-            <div id="product">
-              <img
-                id="img"
-                src={product.image || productImg}
-                alt={product.name}
-              />
-              <h2>{product.name}</h2>
-              <h3>{product.description}</h3>
-              <h3>${product.price}</h3>
-              <button onClick={() => addToCart(product)}>
-                Add to Cart
-              </button>
+        {isLoading && <p> Loading products...</p>}
+        {error && <p>{error}</p>}
+        {!isLoading && !error && product.length === 0 &(
+          <h2>No products available at the moment.</h2>
+        )}
+        {!isLoading && !error &&
+          filteredProducts.map((product) => (
+            <div className='card' key={product.id}>
+              <Product product = {product} />
+              <button onClick={() => addToCart(product)}> Add to Cart</button>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </>
   );
