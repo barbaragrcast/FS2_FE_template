@@ -99,7 +99,7 @@ const Shopping = ({ searchTerm, addToCart: parentAddToCart }) => {
       {cartList.map((product, idx) => (
         <div className="card card-container" key={idx}>
           <div id="product">
-            <img src={product.image || productImg} alt={product.name} />
+            <img src={product.image_url || productImg} alt={product.name} />
             <h2>{product.name}</h2>
             <h3>{product.description}</h3>
             <h3>${product.price}</h3>

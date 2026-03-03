@@ -8,12 +8,16 @@ const mysql = require('mysql2/promise');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// -----------------
 // Middleware
+// -----------------
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// MySQL pool
+// -----------------
+// MySQL Pool
+// -----------------
 const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -44,32 +48,14 @@ async function getCart(res) {
 // -----------------
 
 // Health check
-app.get('/health', (req, res) => res.json({ ok: true }));
-
-// Submit contact form
-app.post('/submit-form', async (req, res) => {
-  const { firstname, lastname, email, subject } = req.body;
-  if (!firstname || !lastname || !email || !subject) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  const sql = `
-    INSERT INTO contact_forms (First_name, Last_name, Email, message)
-    VALUES (?, ?, ?, ?)
-  `;
-  try {
-    const [result] = await db.execute(sql, [firstname, lastname, email, subject]);
-    res.status(201).json({ message: "Form data inserted!", id: result.insertId });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Database error." });
-  }
-});
+apiRouter.get('/health', (req, res) => res.json({ ok: true }));
 
 // Get all products
-app.get('/products', async (req, res) => {
+apiRouter.get("/products", async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT id, name, description, image_url, price FROM products');
+    const [rows] = await db.query(
+      "SELECT id, name, description, image_url, price FROM products"
+    );
     res.status(200).json({ rows });
   } catch (err) {
     console.error(err);
@@ -77,8 +63,8 @@ app.get('/products', async (req, res) => {
   }
 });
 
-// Search products (optional search term)
-apiRouter.get("/ecommerce/products", async (req, res) => {
+// Optional search route (by name)
+apiRouter.get("/products/search", async (req, res) => {
   const searchTerm = req.query.search || '';
   const sql = 'SELECT * FROM products WHERE name LIKE ?';
   try {
@@ -89,10 +75,6 @@ apiRouter.get("/ecommerce/products", async (req, res) => {
     res.status(500).json({ message: "Database error" });
   }
 });
-
-// -----------------
-// Cart Routes
-// -----------------
 
 // Get all cart items
 apiRouter.get("/cart", async (req, res) => {
@@ -124,8 +106,30 @@ apiRouter.delete("/cart/:id", async (req, res) => {
   }
 });
 
-// Mount API router
+// Submit contact form
+apiRouter.post('/submit-form', async (req, res) => {
+  const { firstname, lastname, email, subject } = req.body;
+  if (!firstname || !lastname || !email || !subject) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
 
+  const sql = `
+    INSERT INTO contact_forms (First_name, Last_name, Email, message)
+    VALUES (?, ?, ?, ?)
+  `;
+  try {
+    const [result] = await db.execute(sql, [firstname, lastname, email, subject]);
+    res.status(201).json({ message: "Form data inserted!", id: result.insertId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Database error." });
+  }
+});
+
+// -----------------
+// Mount API Router
+// -----------------
+app.use("/api", apiRouter);
 
 // -----------------
 // Start server
