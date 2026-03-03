@@ -30,7 +30,7 @@ textarea {
 }
 
 input[type="submit"] {
-  background-color: rgb(0, 92, 122);
+  background-color: #B0B980(0, 92, 122);
   color: white;
   padding: 12px 20px;
   border: none;
@@ -39,5 +39,5 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background-color: #000b70;
+  background-color: #B0B980;
 }
