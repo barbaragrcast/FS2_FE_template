@@ -3,19 +3,16 @@ html {
 }
 
 body {
-  top: 0px;
-  min-height: 100%;
+  margin: 0;
+  min-height: 100vh;
   width: 100vw;
   background-color: #f4ede7;
+  display: flex;
+  flex-direction: column;
 }
 
 .main {
-  overflow: auto;
-  position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  top: 0px;
-  width: 100vw;
-  min-height: 140vh;
+  flex: 1;
 }
