@@ -11,7 +11,7 @@ const Shopping = ({ searchTerm, addToCart, cart }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Fetch products
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -27,7 +27,7 @@ const Shopping = ({ searchTerm, addToCart, cart }) => {
     fetchProducts();
   }, []);
 
-  // Filter products
+
   useEffect(() => {
     const filtered = products.filter((product) =>
       product.name.toLowerCase().includes((searchTerm || "").toLowerCase())
@@ -37,9 +37,9 @@ const Shopping = ({ searchTerm, addToCart, cart }) => {
 
   const handleAddToCart = async (product) => {
     try {
-      addToCart(product); // update global cart
+      addToCart(product); 
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/cart`, product);
-      navigate("/cart"); // go to cart page
+      navigate("/cart"); 
     } catch (err) {
       console.error("Failed to add product to cart", err);
     }

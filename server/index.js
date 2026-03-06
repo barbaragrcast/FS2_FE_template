@@ -1,4 +1,4 @@
-// index.js
+
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -8,16 +8,12 @@ const mysql = require('mysql2/promise');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// -----------------
-// Middleware
-// -----------------
+
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// -----------------
-// MySQL Pool
-// -----------------
+
 const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -25,12 +21,9 @@ const db = mysql.createPool({
   database: process.env.DB_NAME,
 });
 
-// -----------------
-// API Router
-// -----------------
+
 const apiRouter = express.Router();
 
-// Helper function to get all cart items
 async function getCart(res) {
   try {
     const [rows] = await db.execute(
@@ -43,14 +36,9 @@ async function getCart(res) {
   }
 }
 
-// -----------------
-// Routes
-// -----------------
 
-// Health check
 apiRouter.get('/health', (req, res) => res.json({ ok: true }));
 
-// Get all products
 apiRouter.get("/products", async (req, res) => {
   try {
     const [rows] = await db.query(
@@ -63,7 +51,7 @@ apiRouter.get("/products", async (req, res) => {
   }
 });
 
-// Optional search route (by name)
+
 apiRouter.get("/products/search", async (req, res) => {
   const searchTerm = req.query.search || '';
   const sql = 'SELECT * FROM products WHERE name LIKE ?';
@@ -76,12 +64,12 @@ apiRouter.get("/products/search", async (req, res) => {
   }
 });
 
-// Get all cart items
+
 apiRouter.get("/cart", async (req, res) => {
   await getCart(res);
 });
 
-// Add to cart
+
 apiRouter.post("/cart", async (req, res) => {
   const { name, price, description, image_url } = req.body;
   const sql = "INSERT INTO cart(name, price, description, image_url) VALUES (?, ?, ?, ?)";
@@ -94,19 +82,19 @@ apiRouter.post("/cart", async (req, res) => {
   }
 });
 
-// Delete cart item by ID
+
 apiRouter.delete("/cart/:id", async (req, res) => {
   const sql = "DELETE FROM cart WHERE id = ?";
   try {
     await db.execute(sql, [req.params.id]);
-    await getCart(res); // Return updated cart
+    await getCart(res); 
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to delete from cart" });
   }
 });
 
-// Submit contact form
+
 apiRouter.post('/submit-form', async (req, res) => {
   const { firstname, lastname, email, subject } = req.body;
   if (!firstname || !lastname || !email || !subject) {
@@ -126,12 +114,8 @@ apiRouter.post('/submit-form', async (req, res) => {
   }
 });
 
-// -----------------
-// Mount API Router
-// -----------------
+
 app.use("/api", apiRouter);
 
-// -----------------
-// Start server
-// -----------------
+
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

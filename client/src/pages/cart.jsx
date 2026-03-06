@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Product from "../components/product"; // Make sure Product is imported
+import Product from "../components/product"; 
 
 const Cart = () => {
   const [cartList, setCartList] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch cart items from backend
   useEffect(() => {
     const getCart = async () => {
       try {
@@ -22,11 +21,11 @@ const Cart = () => {
     getCart();
   }, []);
 
-  // Remove item from cart
+
   const removeFromCart = async (product) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/cart/${product.id}`);
-      // Remove locally
+  
       setCartList((prev) => prev.filter((p) => p.id !== product.id));
     } catch (err) {
       console.error("Failed to remove product from cart", err);
