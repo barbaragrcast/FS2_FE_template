@@ -13,33 +13,29 @@
   justify-content: center;
 }
 
-/* Top row items (logo, search, cart) */
+/* Top row items (logo, search, account/cart) */
 .nav-items {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  padding: 5px 40px; /* extra padding for spacing */
+  justify-content: space-between; /* spread items evenly */
+  width: 90%; /* leave some margin on sides */
+  max-width: 1200px; /* optional, keeps things from stretching too wide */
+  padding: 5px 0; /* small vertical padding */
 }
 
 /* Logo adjustments */
 #logo {
-  height: 60px; /* bigger logo */
-  margin-right: 30px; /* move it to the right */
+  height: 60px;
+  margin-right: 20px;
 }
 
-/* Account and cart icons */
-.icons:not(#logo) {
-  height: 40px; /* normal size for acct and cart */
-  width: auto;
-  margin-right: 10px;
-}
 /* Search container: combine search box + button */
 .search-container {
   display: flex;
   align-items: center;
-  flex-grow: 1; /* take up remaining space */
-  max-width: 500px; /* optional: limit width */
+  flex: 1; /* let it grow to take available space */
+  max-width: 500px; /* optional width limit */
+  justify-content: center; /* center it in the middle */
 }
 
 /* Search box */
@@ -50,9 +46,9 @@
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   border: 3px solid rgb(244, 237, 231);
-  margin: 0; /* remove margin so it's flush with button */
-  transition: outline 0.2s ease;
+  margin: 0;
   font-size: 14px;
+  transition: outline 0.2s ease;
 }
 
 /* Search box focus */
@@ -73,18 +69,21 @@
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
-  margin-left: -3px; /* connect with search box border */
+  margin-left: -3px; /* connect with search box */
 }
 
 .search-btn:hover {
   background-color: rgb(176, 185, 128);
 }
 
-/* Cart button */
-#cart-btn {
-  margin-left: 20px; /* move cart closer to search */
+/* Account & Cart icons */
+.icons:not(#logo) {
+  height: 40px;
+  width: auto;
+  margin-left: 15px;
 }
 
+/* Cart button */
 #cart-btn img {
   height: 40px;
   width: 40px;

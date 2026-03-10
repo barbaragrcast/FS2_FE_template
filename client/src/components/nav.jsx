@@ -16,46 +16,44 @@ const NavBar = (props) => {
   };
 
   return (
-    <>
-      <div className="nav">
-        <div className="nav-items">
-          {/* Logo */}
-          <img className="icons" id="logo" src={logo} alt="logo" />
+    <div className="nav">
+      <div className="nav-items">
+        {/* Logo */}
+        <img className="icons" id="logo" src={logo} alt="logo" />
 
-          {/* Search box + button container */}
-          <div className="search-container">
-            <input
-              type="text"
-              className="search-box"
-              placeholder="search"
-              value={searchTerm}
-              onChange={handleInputChange}
-            />
-            <Link to="/shopping">
-              <button className="search-btn" onClick={handleSearchClick}>
-                search
-              </button>
-            </Link>
-          </div>
-
-          {/* Account icon */}
-          <img className="icons" src={acct} alt="account" />
-
-          {/* Cart icon */}
-          <Link to="/cart" id="cart-btn">
-            <img className="icons" src={cartlogo} alt="cart" />
+        {/* Search box + button container */}
+        <div className="search-container">
+          <input
+            type="text"
+            className="search-box"
+            placeholder="search"
+            value={searchTerm}
+            onChange={handleInputChange}
+          />
+          <Link to="/shopping">
+            <button className="search-btn" onClick={handleSearchClick}>
+              search
+            </button>
           </Link>
         </div>
 
-        {/* Page navigation links */}
-        <div id="links">
-          <Link className="navlink" to="/">Home</Link>
-          <Link className="navlink" to="/shopping">Shopping</Link>
-          <Link className="navlink" to="/about">About Us</Link>
-          <Link className="navlink" to="/contact">Contact</Link>
-        </div>
+        {/* Account icon */}
+        <img className="icons" src={acct} alt="account" />
+
+        {/* Cart icon */}
+        <Link to="/cart" id="cart-btn">
+          <img className="icons" src={cartlogo} alt="cart" />
+        </Link>
       </div>
-    </>
+
+      {/* Page navigation links */}
+      <div id="links">
+        <Link className="navlink" to="/">Home</Link>
+        <Link className="navlink" to="/shopping">Shopping</Link>
+        <Link className="navlink" to="/about">About Us</Link>
+        <Link className="navlink" to="/contact">Contact</Link>
+      </div>
+    </div>
   );
 };
 
