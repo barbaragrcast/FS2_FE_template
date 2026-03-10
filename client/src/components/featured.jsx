@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ProductName from "../components/ProductName";
+import ProductName from "../components/ProductName"; // import correctly
 
 const Featured = () => {
   const [products, setProducts] = useState([]);
@@ -23,18 +23,16 @@ const Featured = () => {
   return (
     <>
       <div id="gallery-head">
-        <h1> Gallery </h1>
+        <h1>Gallery</h1>
       </div>
 
       <div id="card-container">
         {products.map((product) => (
           <div className="featured-card" key={product.id}>
-            <img
-              className="img"
-              src={product.image_url}
-              alt=""
-            />
-            <h3>{product.name} </h3>
+            <img className="img" src={product.image_url || ""} alt={product.name} />
+            
+            {/* Replace h3 with ProductName */}
+            <ProductName name={product.name} />
           </div>
         ))}
       </div>
