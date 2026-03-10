@@ -200,3 +200,10 @@ img {
   font-size: 24px;         
   margin: 10px 0;          
 }
+
+#cart-title {
+  font-family: "Coiny", system-ui;
+  color: rgb(150, 92, 85);
+  font-size: 36px;
+  margin-top: 50px;
+}
