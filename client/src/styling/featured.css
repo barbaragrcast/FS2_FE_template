@@ -17,12 +17,12 @@
   background-color: rgb(244, 237, 231);
 }
 
-.featured-card .product-name {
-  color: rgb(150, 92, 85); /* your chosen color */
-  text-align: center;
-  width: 90%;
-  margin: 0 auto;
-  line-height: 1.2em;
+
+.featured-card {
+  min-width: 300px;
+  justify-content: space-between;
+  margin: 20px;
+  
 }
 
 #gallery-head {

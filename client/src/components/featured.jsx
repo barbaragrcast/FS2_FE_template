@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ProductName from "../components/ProductName";
 
 const Featured = () => {
   const [products, setProducts] = useState([]);
@@ -33,7 +34,7 @@ const Featured = () => {
               src={product.image_url}
               alt=""
             />
-            <h3>{product.name}</h3>
+            <h3>{product.name} style={{ color: "rgb(150, 92, 85)" }}</h3>
           </div>
         ))}
       </div>
