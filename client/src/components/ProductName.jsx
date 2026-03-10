@@ -18,20 +18,21 @@ const ProductName = ({ name }) => {
     }
   }, [name]);
 
-  return (
-    <h2
-      ref={nameRef}
-      style={{
-        width: "80%",
-        textAlign: "center",
-        margin: "0",
-        padding: "0",
-        lineHeight: "1.2em",
-      }}
-    >
-      {name}
-    </h2>
-  );
+return (
+  <h2
+    ref={nameRef}
+    style={{
+      width: "80%",
+      textAlign: "center",       // centers the text
+      margin: "0 auto",
+      padding: "0",
+      lineHeight: "1.2em",
+      color: "rgb(150, 92, 85)"  // change this to any color you want
+    }}
+  >
+    {name}
+  </h2>
+);
 };
 
 export default ProductName;
