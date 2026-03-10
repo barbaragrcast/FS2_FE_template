@@ -1,16 +1,16 @@
-/* Contact Page Background */
+
 #contact-page {
   background: url("https://i.pinimg.com/736x/52/30/64/523064266f1a7aeaaaf525108b1dc4f2.jpg") center/cover no-repeat;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 80px 20px; /* leave space for navbar */
+  padding: 80px 20px; 
 }
 
-/* Form container */
+
 #contact-container {
-  background-color: rgba(255, 165, 207, 0.9); /* soft pink overlay */
+  background-color: rgba(255, 165, 207, 0.9);
   padding: 30px 40px;
   border-radius: 20px;
   max-width: 600px;
@@ -19,28 +19,29 @@
   text-align: center;
 }
 
-/* Heading */
+
 #contact-container h1 {
-  font-family: "Parisienne", cursive;
+  font-family: "Coiny", system-ui;
   font-size: 36px;
   color: rgb(150, 92, 85);
   margin-bottom: 10px;
 }
 
-/* Subtitle */
+
 #contact-container p {
   font-size: 16px;
   color: rgb(120, 70, 70);
   margin-bottom: 20px;
 }
 
-/* Form styling */
+
 #contact {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px; 
 }
+
 
 .name,
 select,
@@ -52,9 +53,10 @@ textarea {
   box-sizing: border-box;
   resize: vertical;
   font-size: 14px;
+  font-family: "Coiny", system-ui;
 }
 
-/* Submit button */
+
 input[type="submit"] {
   background-color: rgb(228, 172, 175);
   color: rgb(150, 92, 85);
@@ -63,6 +65,7 @@ input[type="submit"] {
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
+  font-family: "Coiny", system-ui;
   transition: 0.2s;
 }
 
