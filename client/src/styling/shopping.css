@@ -172,17 +172,17 @@ img {
 
 /* Description styling */
 .product-description {
-  font-size: 13px;       /* slightly bigger */
-  text-align: center;     /* keeps it centered */
-  color: rgb(150, 92, 85); /* same brown as name */
+  font-size: 11px;      
+  text-align: center;   
+  color: rgb(150, 92, 85);
   margin: 5px 0;
 }
 
 /* Price styling */
 .product-price {
-  font-size: 14px;        /* bigger than description */
-  font-weight: bold;      /* stand out more */
-  text-align: center;     /* center it too */
-  color: rgb(150, 92, 85); /* same brown as name */
+  font-size: 14px;        
+  font-weight: bold;      
+  text-align: center;     
+  color: rgb(150, 92, 85); 
   margin: 5px 0;
 }
