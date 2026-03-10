@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 
 const ProductName = ({ name }) => {
   const nameRef = useRef(null);
- // const [fontSize, setFontSize] = useState(18); 
+
 
   useEffect(() => {
     const el = nameRef.current;

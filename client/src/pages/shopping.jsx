@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Product from "../components/product";
 import { useNavigate } from "react-router-dom";
-//import productImg from "../images/productImg.png";
+
 
 const Shopping = ({ searchTerm, addToCart, cart }) => {
   const [products, setProducts] = useState([]);
