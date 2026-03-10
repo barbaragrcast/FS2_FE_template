@@ -8,7 +8,7 @@
 }
 
 #about h1 {
-  font-family: "Parisienne", cursive; /* or use .parisienne-regular class */
+  font-family: "Coiny", system-ui;
   font-size: 36px;
   color: rgb(150, 92, 85);
   margin-bottom: 20px;
