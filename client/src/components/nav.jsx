@@ -19,27 +19,35 @@ const NavBar = (props) => {
     <>
       <div className="nav">
         <div className="nav-items">
-          <img className="icons" id="logo" src={logo} alt=""></img>
-          <input
-            type="text"
-            className="search-box"
-            placeholder="search"
-            value={searchTerm}
-            onChange={handleInputChange}
-          ></input>
+        
+          <img className="icons" id="logo" src={logo} alt="logo" />
 
-          <Link to="/shopping">
-            <button className="search-btn" onClick={handleSearchClick}>
-              search
-            </button>
-          </Link>
+         
+          <div className="search-container">
+            <input
+              type="text"
+              className="search-box"
+              placeholder="search"
+              value={searchTerm}
+              onChange={handleInputChange}
+            />
+            <Link to="/shopping">
+              <button className="search-btn" onClick={handleSearchClick}>
+                search
+              </button>
+            </Link>
+          </div>
 
-          <img className="icons" src={acct} alt=""></img>
+       
+          <img className="icons" src={acct} alt="account" />
 
+     =
           <Link to="/cart" id="cart-btn">
             <img className="icons" src={cartlogo} alt="cart" />
           </Link>
         </div>
+
+    
         <div id="links">
           <Link className="navlink" to="/">Home</Link>
           <Link className="navlink" to="/shopping">Shopping</Link>
