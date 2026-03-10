@@ -1,4 +1,4 @@
-/* Nav container */
+
 .nav {
   position: fixed;
   top: 0;
@@ -16,7 +16,7 @@
 .nav-items {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* spread sections left/center/right */
+  justify-content: space-between;
   width: 90%;
   max-width: 1200px;
   padding: 5px 0;
@@ -29,29 +29,29 @@
   align-items: center;
 }
 
-/* Center search bar */
+
 .nav-items .center {
   justify-content: center;
   flex: 1;
   max-width: 500px;
 }
 
-/* Logo size */
+
 #logo {
   height: 60px;
 }
 
-/* Search container: combine search box + button */
+
 .search-container {
   display: flex;
   align-items: center;
-  flex: 1; /* grow to take available space */
+  flex: 1; 
   max-width: 500px; 
-  justify-content: flex-start; /* shift search slightly right */
-  margin-left: 50px; /* move search bar to the right */
+  justify-content: flex-start; 
+  margin-left: 50px; 
 }
 
-/* Search box */
+
 .search-box {
   width: 100%;
   height: 40px;
@@ -64,15 +64,15 @@
   transition: outline 0.2s ease;
 }
 
-/* Search box focus */
+
 .search-box:focus {
   outline: 2px solid rgb(228, 172, 175);
   outline-offset: 2px;
 }
 
-/* Search button */
+
 .search-btn {
-  height: 40px;
+  height: 50px;
   padding: 0 15px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -82,7 +82,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
-  margin-left: -3px; /* connect with search box */
+  margin-left: -3px; 
 }
 
 .search-btn:hover {
