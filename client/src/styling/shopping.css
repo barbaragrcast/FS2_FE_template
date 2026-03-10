@@ -170,7 +170,7 @@ img {
   background-color: rgb(176, 185, 128);
 }
 
-/* Description styling */
+
 .product-description {
   font-size: 11px;      
   text-align: center;   
@@ -178,11 +178,19 @@ img {
   margin: 5px 0;
 }
 
-/* Price styling */
+
 .product-price {
   font-size: 14px;        
   font-weight: bold;      
   text-align: center;     
   color: rgb(150, 92, 85); 
   margin: 5px 0;
+}
+
+.product-name {
+  text-align: center;            
+  color: rgb(150, 92, 85);      
+  width: 80%;
+  margin: 0 auto;
+  line-height: 1.2em;
 }
