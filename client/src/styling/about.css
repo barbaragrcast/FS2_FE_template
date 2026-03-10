@@ -3,7 +3,7 @@
   padding: 40px 20px 40px; 
   color: rgb(150, 92, 85); 
   text-align: center;
-  background-color:  #ffa5cf;
+  background-color: #f4ede7; 
   position: relative;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .highlight {
-  color:#f4ede7;
+  color:#ffa5cf;
   font-weight: bold;
 }
 

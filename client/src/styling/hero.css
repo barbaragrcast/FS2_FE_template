@@ -22,6 +22,7 @@
 
 #hero-text {
   font-size: 1.2em;
+  font-family: "Coiny", system-ui;
   color: rgb(150, 92, 85);
   text-align: center;
   width: 80%;
