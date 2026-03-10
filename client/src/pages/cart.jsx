@@ -34,7 +34,7 @@ const Cart = () => {
 
   return (
     <div id="cart-container">
-      <button onClick={() => navigate("/shopping")}>Back to Shopping</button>
+      <button  className="add-cart-btn" onClick={() => navigate("/shopping")}>Back to Shopping</button>
 
       <h1 id="cart-title">Cart</h1>
 
@@ -43,11 +43,11 @@ const Cart = () => {
       {cartList.map((product) => (
         <div className="card card-container" key={product.id}>
           <Product product={product} />
-          <button onClick={() => removeFromCart(product)}>Remove</button>
+          <button className="add-cart-btn" onClick={() => removeFromCart(product)}>Remove</button>
         </div>
       ))}
 
-      {cartList.length > 0 && <button id="checkout-btn">Checkout</button>}
+      {cartList.length > 0 && <button className="add-cart-btn" id="checkout-btn">Checkout</button>}
     </div>
   );
 };
