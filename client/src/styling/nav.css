@@ -2,9 +2,10 @@
 .nav-items {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start; /* keep items in a row, not squished */
   width: 100%;
-  padding: 0 40px;
+  padding: 5px 40px;
+  gap: 15px; /* space between logo, search, acct, cart */
 }
 
 
@@ -17,9 +18,8 @@
 .search-container {
   display: flex;
   align-items: center;
-  flex-grow: 1; 
-  max-width: 500px; 
-  margin: 0 20px;
+  max-width: 400px; /* limit width */
+  flex-grow: 0; /* no stretching */
 }
 
 
