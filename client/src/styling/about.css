@@ -8,9 +8,11 @@
 }
 
 #about h1 {
-  font-family: "Cursive", sans-serif;
+  font-family: "Parisienne", cursive; /* or use .parisienne-regular class */
   font-size: 36px;
+  color: rgb(150, 92, 85);
   margin-bottom: 20px;
+  text-align: center;
 }
 
 #about h3 {
