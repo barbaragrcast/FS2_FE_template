@@ -19,10 +19,10 @@ const NavBar = (props) => {
     <>
       <div className="nav">
         <div className="nav-items">
-        
+          {/* Logo */}
           <img className="icons" id="logo" src={logo} alt="logo" />
 
-         
+          {/* Search box + button container */}
           <div className="search-container">
             <input
               type="text"
@@ -38,16 +38,16 @@ const NavBar = (props) => {
             </Link>
           </div>
 
-       
+          {/* Account icon */}
           <img className="icons" src={acct} alt="account" />
 
-     =
+          {/* Cart icon */}
           <Link to="/cart" id="cart-btn">
             <img className="icons" src={cartlogo} alt="cart" />
           </Link>
         </div>
 
-    
+        {/* Page navigation links */}
         <div id="links">
           <Link className="navlink" to="/">Home</Link>
           <Link className="navlink" to="/shopping">Shopping</Link>

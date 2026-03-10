@@ -3,7 +3,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 80px; /* increased for search + links */
+  height: 80px; 
   width: 100vw;
   background: #ffa5cf;
   z-index: 999;
@@ -13,34 +13,49 @@
   justify-content: center;
 }
 
-/* Top row items (logo, search, icons) */
+/* Top row items (logo, search, cart) */
 .nav-items {
   display: flex;
   align-items: center;
-  padding: 5px 20px;
+  justify-content: flex-start;
   width: 100%;
-  justify-content: space-between;
+  padding: 5px 40px; /* extra padding for spacing */
 }
 
-/* Logo and icons */
-#logo, .icons {
-  height: 40px;
+/* Logo adjustments */
+#logo {
+  height: 60px; /* bigger logo */
+  margin-right: 30px; /* move it to the right */
+}
+
+/* Account and cart icons */
+.icons:not(#logo) {
+  height: 40px; /* normal size for acct and cart */
+  width: auto;
   margin-right: 10px;
+}
+/* Search container: combine search box + button */
+.search-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* take up remaining space */
+  max-width: 500px; /* optional: limit width */
 }
 
 /* Search box */
 .search-box {
-  width: 60%;
-  height: 35px;
+  width: 100%;
+  height: 40px;
   padding: 5px 10px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   border: 3px solid rgb(244, 237, 231);
+  margin: 0; /* remove margin so it's flush with button */
   transition: outline 0.2s ease;
-  margin-left: 10px;
+  font-size: 14px;
 }
 
-/* Soft outline on focus */
+/* Search box focus */
 .search-box:focus {
   outline: 2px solid rgb(228, 172, 175);
   outline-offset: 2px;
@@ -49,7 +64,7 @@
 /* Search button */
 .search-btn {
   height: 40px;
-  padding: 5px 15px;
+  padding: 0 15px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   border: none;
@@ -58,6 +73,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
+  margin-left: -3px; /* connect with search box border */
 }
 
 .search-btn:hover {
@@ -65,9 +81,13 @@
 }
 
 /* Cart button */
+#cart-btn {
+  margin-left: 20px; /* move cart closer to search */
+}
+
 #cart-btn img {
-  height: 38px;
-  width: 38px;
+  height: 40px;
+  width: 40px;
 }
 
 /* Nav links (page navigation) */
@@ -75,12 +95,12 @@
   display: flex;
   justify-content: center;
   margin-top: 5px;
-  gap: 10px; /* space between links */
+  gap: 10px;
 }
 
 .navlink {
-  background-color: rgb(228, 172, 175); /* pink pastel */
-  color: rgb(150, 92, 85); /* brown text */
+  background-color: rgb(228, 172, 175);
+  color: rgb(150, 92, 85);
   padding: 8px 16px;
   border-radius: 20px;
   font-weight: bold;
@@ -90,9 +110,9 @@
 }
 
 .navlink:hover {
-  background-color: rgb(176, 185, 128); /* pastel green hover */
+  background-color: rgb(176, 185, 128);
 }
 
 .navlink.active {
-  background-color: rgb(228, 120, 135); 
+  background-color: rgb(228, 120, 135);
 }
